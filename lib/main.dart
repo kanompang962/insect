@@ -1,60 +1,63 @@
 import 'package:flutter/material.dart';
-import 'package:project001/MemberPage/Edit/editProfileMember.dart';
-import 'package:project001/MemberPage/accountMember.dart';
-import 'package:project001/MemberPage/menuMember.dart';
-import 'package:project001/MemberPage/postMember.dart';
-import 'package:project001/MemberPage/rootMember.dart';
-import 'package:project001/UserPage/accountUser.dart';
-import 'package:project001/UserPage/create_account.dart';
-import 'package:project001/UserPage/menuUser.dart';
-import 'package:project001/UserPage/rootUser.dart';
+import 'package:flutter/services.dart';
+import 'package:project001/Admin/root/rootAdmin.dart';
+import 'package:project001/Member/editProfile.dart';
+import 'package:project001/Member/account.dart';
+import 'package:project001/User/menu.dart';
+import 'package:project001/User/post.dart';
+import 'package:project001/Member/root/rootMember.dart';
+import 'package:project001/User/login.dart';
+import 'package:project001/User/register.dart';
 import 'package:project001/utility/my_constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'User/root/rootUser.dart';
 
 final Map<String, WidgetBuilder> map = {
-  //User
-  '/createAccount': (BuildContext context) => CreateAccount(),
+  // User
   '/rootUser': (BuildContext context) => RootUser(),
-  '/menuUser': (BuildContext context) => MenuUser(),
-  '/accountUser': (BuildContext context) => AccountUser(),
-  //Member
-  '/editProfileMember': (BuildContext context) => EditProfileMember(),
-  //'/editInsectLiteMember': (BuildContext context) => EditInsectLiteMember(epidemicModel: Null),
-
-  '/postMember': (BuildContext context) => PostMember(),
+  '/register': (BuildContext context) => Register(),
+  '/login': (BuildContext context) => Login(),
+  // Member
   '/rootMember': (BuildContext context) => RootMember(),
-  '/menuMember': (BuildContext context) => MenuMember(),
-  '/accountMember': (BuildContext context) => AccountMember(),
-  //Expert
-  //'/rootExpert': (BuildContext context) => RootExpert(),
-  //'/accountExpert': (BuildContext context) => AccountExpert(),
+  '/editProfileMember': (BuildContext context) => EditProfile(),
+  '/postMember': (BuildContext context) => Post(),
+  '/menuMember': (BuildContext context) => Menu(),
+  '/accountMember': (BuildContext context) => Account(),
+  // Admin
+  '/rootAdmin': (BuildContext context) => RootAdmin(),
 };
 String? initlalRoute;
 
 Future<Null> main() async {
+  // ไม่ให้ใช้จอแนวนอน
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ],
+  );
+  // เช็คสถานะผู้ใช้
   SharedPreferences preferences = await SharedPreferences.getInstance();
   String? type = preferences.getString('type');
-  print('### type ===>> $type');
-  if (type?.isEmpty ?? true) {
-    initlalRoute = MyConstant.routeUser;
-    runApp(MyApp());
-  } else {
-    initlalRoute = MyConstant.routeMember;
-    runApp(MyApp());
-    /*switch (type) {
-      case 'Member':
-        initlalRoute = MyConstant.routeMember;
-        runApp(MyApp());
-        break;
-      case 'Expert':
-        initlalRoute = MyConstant.routeExpert;
-        runApp(MyApp());
-        break;
-      default:
-    }*/
+  print('### UserType ==> $type');
+  switch (type) {
+    case 'Member':
+      initlalRoute = MyConstant.routeMember;
+      runApp(MyApp());
+      break;
+    case 'Expert':
+      initlalRoute = MyConstant.routeMember;
+      runApp(MyApp());
+      break;
+    case 'Admin':
+      initlalRoute = MyConstant.routeAdmin;
+      runApp(MyApp());
+      break;
+    default:
+      initlalRoute = MyConstant.routeUser;
+      runApp(MyApp());
   }
-  
 }
 
 class MyApp extends StatelessWidget {
