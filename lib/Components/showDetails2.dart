@@ -84,52 +84,61 @@ class _ShowDetails2State extends State<ShowDetails2> {
       body: load
           ? ShowProgress()
           : haveData
-              ? SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 280,
-                        width: double.infinity,
-                        child: PageView.builder(
-                          controller: controller,
-                          onPageChanged: (index) {
-                            setState(() {
-                              currentIndex = index % images.length;
-                            });
-                          },
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 0),
-                              child: SizedBox(
-                                height: 300,
-                                width: double.infinity,
-                                child: CachedNetworkImage(
-                                  fit: BoxFit.cover,
-                                  imageUrl: images[index % images.length],
-                                  placeholder: (context, url) =>
-                                      ShowImage(path: MyConstant.image),
-                                  errorWidget: (context, url, error) =>
-                                      ShowImage(path: MyConstant.image),
-                                ),
+              ? LayoutBuilder(
+                  builder: (context, constraints) => SingleChildScrollView(
+                    child: Center(
+                      child: Container(
+                        width: (constraints.maxWidth > 412)
+                            ? (constraints.maxWidth * 0.8)
+                            : constraints.maxWidth,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 280,
+                              width: double.infinity,
+                              child: PageView.builder(
+                                controller: controller,
+                                onPageChanged: (index) {
+                                  setState(() {
+                                    currentIndex = index % images.length;
+                                  });
+                                },
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 0),
+                                    child: SizedBox(
+                                      height: 300,
+                                      width: double.infinity,
+                                      child: CachedNetworkImage(
+                                        fit: BoxFit.cover,
+                                        imageUrl: images[index % images.length],
+                                        placeholder: (context, url) =>
+                                            ShowImage(path: MyConstant.image),
+                                        errorWidget: (context, url, error) =>
+                                            ShowImage(path: MyConstant.image),
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
-                            );
-                          },
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                for (var i = 0; i < images.length; i++)
+                                  buildIndicator(currentIndex == i)
+                              ],
+                            ),
+                            buildDetails(size),
+                          ],
                         ),
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          for (var i = 0; i < images.length; i++)
-                            buildIndicator(currentIndex == i)
-                        ],
-                      ),
-                      buildDetails(size),
-                    ],
+                    ),
                   ),
                 )
               : showNoData(),
@@ -261,6 +270,12 @@ class _ShowDetails2State extends State<ShowDetails2> {
 
   AppBar buildAppbar() {
     return AppBar(
+      title: Text(
+        'ข้อมูลพบการแพร่ระบาดของแมลง',
+        style: GoogleFonts.prompt(
+          fontSize: 14,
+        ),
+      ),
       backgroundColor: Colors.white,
       elevation: 0,
       iconTheme: IconThemeData(color: Colors.black),

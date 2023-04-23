@@ -10,7 +10,7 @@ import 'package:project001/User/post.dart';
 import 'package:project001/model/insectLiteAll_model.dart';
 import 'package:project001/utility/my_constant.dart';
 import 'package:project001/utility/my_dialog.dart';
-import 'package:project001/widgets/show_ButtonDetail.dart';
+import 'package:project001/widgets/show_ButtonDetail2.dart';
 import 'package:project001/widgets/show_image.dart';
 import 'package:project001/widgets/show_progress.dart';
 
@@ -102,53 +102,48 @@ class _ListInsectLiteState extends State<ListInsectLite> {
           ? ShowProgress()
           : LayoutBuilder(
               builder: (context, constraints) => Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildSearchTextField(size),
-                    Expanded(
-                      child: MediaQuery.removePadding(
-                        context: context,
-                        removeTop: true,
-                        child: Container(
-                          width: (constraints.maxWidth > 412)
-                              ? (constraints.maxWidth * 0.8)
-                              : constraints.maxWidth,
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: _foundInsect.length,
-                            itemBuilder: (context, index) {
-                              return LayoutBuilder(
-                                builder: (context, constraints) => Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 8, right: 8, top: 4),
+                child: Container(
+                  width: (constraints.maxWidth > 412)
+                      ? (constraints.maxWidth * 0.8)
+                      : constraints.maxWidth,
+                  child: Column(
+                    children: [
+                      buildSearchTextField(size),
+                      Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: _foundInsect.length,
+                          itemBuilder: (context, index) {
+                            return LayoutBuilder(
+                              builder: (context, constraints) => Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 8, right: 8, top: 4),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
                                   child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Container(
-                                      padding: EdgeInsets.all(14),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          buildHeader(index),
-                                          buildCenter(index, constraints),
-                                          buildDetails(index),
-                                          buildFooter(index)
-                                        ],
-                                      ),
+                                    padding: EdgeInsets.all(14),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        buildHeader(index),
+                                        buildCenter(index, constraints),
+                                        buildDetails(index),
+                                        buildFooter(index)
+                                      ],
                                     ),
                                   ),
                                 ),
-                              );
-                            },
-                          ),
+                              ),
+                            );
+                          },
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -328,7 +323,7 @@ class _ListInsectLiteState extends State<ListInsectLite> {
   Widget buildFooter(int index) {
     return Row(
       children: [
-        ShowButtonDetail(id: _foundInsect[index].inID),
+        ShowButtonDetail2(id: _foundInsect[index].inID),
         SizedBox(width: 2.0),
         OutlineButton(
           highlightedBorderColor: Colors.black,

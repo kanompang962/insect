@@ -107,19 +107,18 @@ class _InsectLiteState extends State<InsectLite> {
       body: load
           ? ShowProgress()
           : LayoutBuilder(
-              builder: (context, constraints) => Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildSearchTextField(size),
-                    Expanded(
-                      child: MediaQuery.removePadding(
-                        context: context,
-                        removeTop: true,
-                        child: Container(
-                          width: (constraints.maxWidth > 412)
-                              ? (constraints.maxWidth * 0.8)
-                              : constraints.maxWidth,
+              builder: (context, constraints) => GestureDetector(
+                onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+                behavior: HitTestBehavior.opaque,
+                child: Center(
+                  child: Container(
+                    width: (constraints.maxWidth > 412)
+                        ? (constraints.maxWidth * 0.8)
+                        : constraints.maxWidth,
+                    child: Column(
+                      children: [
+                        buildSearchTextField(size),
+                        Expanded(
                           child: ListView.builder(
                             shrinkWrap: true,
                             itemCount: _foundInsect.length,
@@ -152,9 +151,9 @@ class _InsectLiteState extends State<InsectLite> {
                             },
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -180,6 +179,7 @@ class _InsectLiteState extends State<InsectLite> {
         "ยืนยัน",
         style: GoogleFonts.prompt(
           color: MyConstant.dark2,
+          fontSize: 12,
         ),
       ),
     );
@@ -246,7 +246,7 @@ class _InsectLiteState extends State<InsectLite> {
         Text(
           '${_foundInsect[index].inName}',
           style: GoogleFonts.prompt(
-            fontSize: 16,
+            fontSize: 14,
             color: MyConstant.dark,
             fontWeight: FontWeight.bold,
           ),
@@ -257,7 +257,7 @@ class _InsectLiteState extends State<InsectLite> {
           'อ.${_foundInsect[index].inDistrict}'
           'จ.${_foundInsect[index].inProvince}',
           style: GoogleFonts.prompt(
-            fontSize: 14,
+            fontSize: 12,
             color: MyConstant.dark2,
           ),
           maxLines: 3,
@@ -327,7 +327,7 @@ class _InsectLiteState extends State<InsectLite> {
                   Text(
                     "${_foundInsect[index].usName}",
                     style: GoogleFonts.prompt(
-                      fontSize: 14,
+                      fontSize: 12,
                       color: MyConstant.dark2,
                       fontWeight: FontWeight.bold,
                     ),

@@ -57,10 +57,23 @@ class _ShowInsectLiteState extends State<ShowInsectLite> {
         // Have Data
         for (var item in json.decode(value.data)) {
           insectLiteModelAPI = InsectLiteModel.fromMap(item);
-          subImageX(insectLiteModelAPI!.img);
+          _subImageX(insectLiteModelAPI!.img);
         }
       }
     });
+  }
+
+  void _subImageX(String string) {
+    String result = string.substring(1, string.length - 1);
+    List<String> strings = result.split(',');
+    String url;
+    for (var item in strings) {
+      item = item.replaceAll(' ', '');
+      url = '${MyConstant.domain}/insectFile$item';
+      setState(() {
+        images.add(url);
+      });
+    }
   }
 
   @override
@@ -73,56 +86,62 @@ class _ShowInsectLiteState extends State<ShowInsectLite> {
       body: load
           ? ShowProgress()
           : haveData!
-              ? Stack(
-                  children: [
-                    SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 280,
-                            width: double.infinity,
-                            child: PageView.builder(
-                              controller: controller,
-                              onPageChanged: (index) {
-                                setState(() {
-                                  currentIndex = index % images.length;
-                                });
-                              },
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 0),
-                                  child: SizedBox(
-                                    height: 300,
-                                    width: double.infinity,
-                                    child: CachedNetworkImage(
-                                      fit: BoxFit.cover,
-                                      imageUrl: images[index % images.length],
-                                      placeholder: (context, url) =>
-                                          ShowProgress(),
-                                      errorWidget: (context, url, error) =>
-                                          ShowImage(path: MyConstant.image),
+              ? LayoutBuilder(
+                  builder: (context, constraints) => SingleChildScrollView(
+                    child: Center(
+                      child: Container(
+                        width: (constraints.maxWidth > 412)
+                            ? (constraints.maxWidth * 0.8)
+                            : constraints.maxWidth,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 280,
+                              width: double.infinity,
+                              child: PageView.builder(
+                                controller: controller,
+                                onPageChanged: (index) {
+                                  setState(() {
+                                    currentIndex = index % images.length;
+                                  });
+                                },
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 0),
+                                    child: SizedBox(
+                                      height: 300,
+                                      width: double.infinity,
+                                      child: CachedNetworkImage(
+                                        fit: BoxFit.cover,
+                                        imageUrl: images[index % images.length],
+                                        placeholder: (context, url) =>
+                                            ShowProgress(),
+                                        errorWidget: (context, url, error) =>
+                                            ShowImage(path: MyConstant.image),
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
+                                  );
+                                },
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              for (var i = 0; i < images.length; i++)
-                                buildIndicator(currentIndex == i)
-                            ],
-                          ),
-                          buildDetails(size),
-                        ],
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                for (var i = 0; i < images.length; i++)
+                                  buildIndicator(currentIndex == i)
+                              ],
+                            ),
+                            buildDetails(size),
+                          ],
+                        ),
                       ),
                     ),
-                  ],
+                  ),
                 )
               : ShowProgress(),
     );
@@ -223,7 +242,7 @@ class _ShowInsectLiteState extends State<ShowInsectLite> {
               Text(
                 '${insectLiteModelAPI!.name}',
                 style: GoogleFonts.prompt(
-                  fontSize: 20,
+                  fontSize: 16,
                 ),
               ),
             ],
@@ -231,7 +250,7 @@ class _ShowInsectLiteState extends State<ShowInsectLite> {
           Text(
             'รายละเอียด:',
             style: GoogleFonts.prompt(
-              fontSize: 16,
+              fontSize: 12,
               fontStyle: FontStyle.italic,
               color: MyConstant.primary,
             ),
@@ -246,7 +265,7 @@ class _ShowInsectLiteState extends State<ShowInsectLite> {
                 'อ.${insectLiteModelAPI!.district} '
                 'จ.${insectLiteModelAPI!.province} ',
                 style: GoogleFonts.prompt(
-                  fontSize: 14,
+                  fontSize: 12,
                 ),
                 //maxLines: 10,
                 overflow: TextOverflow.ellipsis,
@@ -254,13 +273,13 @@ class _ShowInsectLiteState extends State<ShowInsectLite> {
               Text(
                 'วันที่ ${insectLiteModelAPI!.date}',
                 style: GoogleFonts.prompt(
-                  fontSize: 14,
+                  fontSize: 12,
                 ),
               ),
               Text(
                 'เวลา ${insectLiteModelAPI!.time}',
                 style: GoogleFonts.prompt(
-                  fontSize: 14,
+                  fontSize: 12,
                 ),
               ),
               Container(
@@ -279,14 +298,14 @@ class _ShowInsectLiteState extends State<ShowInsectLite> {
                     Text(
                       'สถานะรอยืนยันจากผู้เชี่ยวชาญ',
                       style: GoogleFonts.prompt(
-                        fontSize: 16,
+                        fontSize: 12,
                         color: Colors.red[700],
                       ),
                     ),
                     Text(
                       '(Expert confirmation pending status)',
                       style: GoogleFonts.prompt(
-                        fontSize: 16,
+                        fontSize: 12,
                         color: Colors.red[700],
                       ),
                     )
@@ -315,37 +334,18 @@ class _ShowInsectLiteState extends State<ShowInsectLite> {
     );
   }
 
-  subImageX(String string) {
-    String result = string.substring(1, string.length - 1);
-    List<String> strings = result.split(',');
-    String url;
-    for (var item in strings) {
-      item = item.replaceAll(' ', '');
-      url = '${MyConstant.domain}/insectFile$item';
-      setState(() {
-        images.add(url);
-      });
-    }
-  }
-
   AppBar buildAppbar(double size) {
     return AppBar(
+      title: Text(
+        'ข้อมูลพบการแพร่ระบาดของแมลง',
+        style: GoogleFonts.prompt(
+          fontSize: 14,
+        ),
+      ),
       backgroundColor: Colors.white,
       elevation: 0,
       iconTheme: IconThemeData(color: Colors.black),
-      title: Text(
-        'ข้อมูลแมลงที่พบ',
-        style: GoogleFonts.prompt(
-          fontSize: 16,
-        ),
-      ),
       actions: [
-        /*IconButton(
-          onPressed: () {
-            confirmDialogDelete(context);
-          },
-          icon: Icon(Icons.delete),
-        ),*/
         IconButton(
           onPressed: () {
             showBottomSheet(size);
@@ -357,7 +357,7 @@ class _ShowInsectLiteState extends State<ShowInsectLite> {
   }
 
 // function
-  Future<void> _functionDel(BuildContext context) async {
+  Future<Null> _functionDel(BuildContext context) async {
     String apiDeleteProductWhereId =
         '${MyConstant.domain}/insectFile/deleteInsectLiteWhereID.php?isAdd=true&id=${insectLiteModelAPI!.id}';
     await Dio().get(apiDeleteProductWhereId).then(
@@ -371,8 +371,8 @@ class _ShowInsectLiteState extends State<ShowInsectLite> {
   }
 
 // Show Bottom Sheet
-  Future<void> showBottomSheet(double size) {
-    return showModalBottomSheet<void>(
+  Future<Null> showBottomSheet(double size) {
+    return showModalBottomSheet<Null>(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(10),

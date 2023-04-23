@@ -114,67 +114,71 @@ class _EditInsectDataState extends State<EditInsectData> {
               builder: (context, constraints) => GestureDetector(
                 onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
                 behavior: HitTestBehavior.opaque,
-                child: SingleChildScrollView(
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      children: [
-                        buildImage(constraints),
-                        Container(
-                          width: size * 0.8,
-                          padding: EdgeInsets.symmetric(vertical: 24),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              buildTextName(),
-                              // Text(items.toString()),
-
-                              // end
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 8),
-                                child: Text(
-                                  'รายละเอียด: ',
-                                  style: GoogleFonts.prompt(
-                                      color: MyConstant.primary),
-                                ),
-                              ),
-                              buildTextDetails(),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 8),
-                                child: Text(
-                                  'วิธีป้องกันและกำจัด: ',
-                                  style: GoogleFonts.prompt(
-                                    color: Colors.red[700],
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: Form(
+                      key: formKey,
+                      child: Container(
+                        width: (constraints.maxWidth > 412)
+                            ? (constraints.maxWidth * 0.8)
+                            : constraints.maxWidth,
+                        child: Column(
+                          children: [
+                            buildImage(constraints),
+                            Container(
+                              width: size * 0.8,
+                              padding: EdgeInsets.symmetric(vertical: 24),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  buildTextName(),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 8),
+                                    child: Text(
+                                      'รายละเอียด: ',
+                                      style: GoogleFonts.prompt(
+                                          color: MyConstant.primary),
+                                    ),
                                   ),
-                                ),
-                              ),
-                              buildTextProtect(),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  buildTextDate(constraints),
-                                  buildTextTime(constraints),
+                                  buildTextDetails(),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 8),
+                                    child: Text(
+                                      'วิธีป้องกันและกำจัด: ',
+                                      style: GoogleFonts.prompt(
+                                        color: Colors.red[700],
+                                      ),
+                                    ),
+                                  ),
+                                  buildTextProtect(),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      buildTextDate(constraints),
+                                      buildTextTime(constraints),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      buildTextLat(constraints),
+                                      buildTextLng(constraints),
+                                      //buildButtonDate(size),
+                                    ],
+                                  ),
+                                  buildRadioJuiceSucker(size),
+                                  buildRadioStemBorer(size),
+                                  buildRadioRootFeeder(size),
+                                  buildRadioLeafFeeder(size),
                                 ],
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  buildTextLat(constraints),
-                                  buildTextLng(constraints),
-                                  //buildButtonDate(size),
-                                ],
-                              ),
-                              buildRadioJuiceSucker(size),
-                              buildRadioStemBorer(size),
-                              buildRadioRootFeeder(size),
-                              buildRadioLeafFeeder(size),
-                            ],
-                          ),
+                            ),
+                            buildFooter(size),
+                          ],
                         ),
-                        buildFooter(size),
-                      ],
+                      ),
                     ),
                   ),
                 ),
@@ -341,7 +345,7 @@ class _EditInsectDataState extends State<EditInsectData> {
       title: Text(
         'แก้ไขข้อมูลแมลง',
         style: GoogleFonts.prompt(
-          fontSize: 16,
+          fontSize: 14,
         ),
       ),
     );

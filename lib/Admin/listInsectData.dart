@@ -117,54 +117,49 @@ class _ListInsectDataState extends State<ListInsectData> {
           ? ShowProgress()
           : LayoutBuilder(
               builder: (context, constraints) => Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildSearchTextField(size),
-                    buildMenus(),
-                    Expanded(
-                      child: MediaQuery.removePadding(
-                        context: context,
-                        removeTop: true,
-                        child: Container(
-                          width: (constraints.maxWidth > 412)
-                              ? (constraints.maxWidth * 0.8)
-                              : constraints.maxWidth,
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: _foundInsect.length,
-                            itemBuilder: (context, index) {
-                              return LayoutBuilder(
-                                builder: (context, constraints) => Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 8, right: 8, top: 4),
+                child: Container(
+                  width: (constraints.maxWidth > 412)
+                      ? (constraints.maxWidth * 0.8)
+                      : constraints.maxWidth,
+                  child: Column(
+                    children: [
+                      buildSearchTextField(size),
+                      buildMenus(),
+                      Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: _foundInsect.length,
+                          itemBuilder: (context, index) {
+                            return LayoutBuilder(
+                              builder: (context, constraints) => Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 8, right: 8, top: 4),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
                                   child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Container(
-                                      padding: EdgeInsets.all(14),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          buildHeader(index),
-                                          buildCenter(index, constraints),
-                                          buildDetails(index),
-                                          buildFooter(index)
-                                        ],
-                                      ),
+                                    padding: EdgeInsets.all(14),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        buildHeader(index),
+                                        buildCenter(index, constraints),
+                                        buildDetails(index),
+                                        buildFooter(index)
+                                      ],
                                     ),
                                   ),
                                 ),
-                              );
-                            },
-                          ),
+                              ),
+                            );
+                          },
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -250,7 +245,7 @@ class _ListInsectDataState extends State<ListInsectData> {
         Text(
           '${_foundInsect[index].inName}',
           style: GoogleFonts.prompt(
-            fontSize: 16,
+            fontSize: 14,
             color: MyConstant.dark,
             fontWeight: FontWeight.bold,
           ),
@@ -258,7 +253,7 @@ class _ListInsectDataState extends State<ListInsectData> {
         Text(
           '${_foundInsect[index].inDetails}',
           style: GoogleFonts.prompt(
-            fontSize: 14,
+            fontSize: 12,
             color: MyConstant.dark2,
           ),
           maxLines: 3,
@@ -324,7 +319,7 @@ class _ListInsectDataState extends State<ListInsectData> {
                   Text(
                     "${_foundInsect[index].usName}",
                     style: GoogleFonts.prompt(
-                      fontSize: 14,
+                      fontSize: 12,
                       color: MyConstant.dark2,
                       fontWeight: FontWeight.bold,
                     ),

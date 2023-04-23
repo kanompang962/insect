@@ -112,8 +112,26 @@ class MyDialog {
               title: message, textStyle: MyConstant().h3Style(Colors.black)),
         ),
         children: [
-          TextButton(onPressed: () => Navigator.pop(context), child: Text('OK'))
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: OutlineButton(
+              highlightedBorderColor: Colors.black,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                "ตกลง",
+                style: GoogleFonts.prompt(
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ),
         ],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
     );
   }
@@ -154,8 +172,26 @@ class MyDialog {
               title: message, textStyle: MyConstant().h3Style(Colors.black)),
         ),
         children: [
-          TextButton(onPressed: () => Navigator.pop(context), child: Text('OK'))
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: OutlineButton(
+              highlightedBorderColor: Colors.black,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                "ตกลง",
+                style: GoogleFonts.prompt(
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ),
         ],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
     );
   }
@@ -176,8 +212,26 @@ class MyDialog {
               title: message, textStyle: MyConstant().h3Style(Colors.black)),
         ),
         children: [
-          TextButton(onPressed: () => Navigator.pop(context), child: Text('OK'))
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: OutlineButton(
+              highlightedBorderColor: Colors.black,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                "ตกลง",
+                style: GoogleFonts.prompt(
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ),
         ],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
     );
   }

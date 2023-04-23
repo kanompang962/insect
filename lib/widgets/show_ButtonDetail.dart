@@ -27,6 +27,7 @@ class ShowButtonDetail extends StatelessWidget {
         "รายละเอียด",
         style: GoogleFonts.prompt(
           color: Colors.white,
+          fontSize: 12,
         ),
       ),
     );

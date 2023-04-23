@@ -8,9 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:project001/utility/my_constant.dart';
 import 'package:project001/utility/my_dialog.dart';
 import 'package:project001/widgets/show_ButtonCancel.dart';
-import 'package:project001/widgets/show_image.dart';
 import 'package:project001/widgets/show_progress.dart';
-import 'package:project001/widgets/show_title.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Post extends StatefulWidget {
@@ -143,27 +141,16 @@ class _PostState extends State<Post> {
                 builder: (context, constraints) => GestureDetector(
                   onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
                   behavior: HitTestBehavior.opaque,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        buildMenu(constraints),
-                        flagColor
-                            ? Form(
-                                key: formKey,
-                                child: Column(
-                                  children: [
-                                    buildImage(constraints),
-                                    Container(
-                                      width: size * 0.8,
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 24),
-                                      child: uiTypeMember(constraints, size),
-                                    ),
-                                    buildFooter(size),
-                                  ],
-                                ),
-                              )
-                            : typeUser != 'Member'
+                  child: Center(
+                    child: SingleChildScrollView(
+                      child: Container(
+                        width: (constraints.maxWidth > 412)
+                            ? (constraints.maxWidth * 0.8)
+                            : constraints.maxWidth,
+                        child: Column(
+                          children: [
+                            buildMenu(constraints),
+                            flagColor
                                 ? Form(
                                     key: formKey,
                                     child: Column(
@@ -174,25 +161,44 @@ class _PostState extends State<Post> {
                                           padding: EdgeInsets.symmetric(
                                               vertical: 24),
                                           child:
-                                              uiTypeExpert(constraints, size),
+                                              uiTypeMember(constraints, size),
                                         ),
                                         buildFooter(size),
                                       ],
                                     ),
                                   )
-                                : Center(
-                                    child: Container(
-                                      padding: EdgeInsets.only(
-                                          top: constraints.maxHeight / 2.5),
-                                      child: Text(
-                                        'สำหรับผู้เชียวชาญและแอดมิน',
-                                        style: GoogleFonts.prompt(
-                                          color: MyConstant.dark2,
+                                : typeUser != 'Member'
+                                    ? Form(
+                                        key: formKey,
+                                        child: Column(
+                                          children: [
+                                            buildImage(constraints),
+                                            Container(
+                                              width: size * 0.8,
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 24),
+                                              child: uiTypeExpert(
+                                                  constraints, size),
+                                            ),
+                                            buildFooter(size),
+                                          ],
+                                        ),
+                                      )
+                                    : Center(
+                                        child: Container(
+                                          padding: EdgeInsets.only(
+                                              top: constraints.maxHeight / 2.5),
+                                          child: Text(
+                                            'สำหรับผู้เชียวชาญและแอดมิน',
+                                            style: GoogleFonts.prompt(
+                                              color: MyConstant.dark2,
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                      ],
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),

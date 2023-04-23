@@ -32,17 +32,24 @@ class _LoginState extends State<Login> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
           behavior: HitTestBehavior.opaque,
-          child: Form(
-            key: formKey,
-            child: Container(
-              child: ListView(
-                children: [
-                  buildAppName(),
-                  buildUser(size),
-                  buildPassword(size),
-                  buildButtonLogin(size), //buidLogin(size),
-                  buildRegister(context),
-                ],
+          child: LayoutBuilder(
+            builder: (context, constraints) => Center(
+              child: Form(
+                key: formKey,
+                child: Container(
+                  width: (constraints.maxWidth > 412)
+                      ? (constraints.maxWidth * 0.8)
+                      : constraints.maxWidth,
+                  child: ListView(
+                    children: [
+                      buildAppName(),
+                      buildUser(size),
+                      buildPassword(size),
+                      buildButtonLogin(size), //buidLogin(size),
+                      buildRegister(context),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),

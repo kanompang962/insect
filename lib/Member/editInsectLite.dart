@@ -116,33 +116,38 @@ class _EditInsectLiteState extends State<EditInsectLite> {
                   child: SingleChildScrollView(
                     child: Form(
                       key: formKey,
-                      child: Column(
-                        children: [
-                          buildImage(constraints),
-                          Container(
-                            width: size * 0.7,
-                            padding: EdgeInsets.only(bottom: 10),
-                            child: Column(
-                              children: [
-                                buildTextName(),
-                                buildTextTime(),
-                                buildTextDate(),
-                                buildTextCounty(),
-                                buildTextDistrict(),
-                                buildTextProvince(),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    buildTextLat(constraints),
-                                    buildTextLng(constraints),
-                                  ],
-                                )
-                              ],
+                      child: Container(
+                        width: (constraints.maxWidth > 412)
+                            ? (constraints.maxWidth * 0.8)
+                            : constraints.maxWidth,
+                        child: Column(
+                          children: [
+                            buildImage(constraints),
+                            Container(
+                              width: size * 0.7,
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: Column(
+                                children: [
+                                  buildTextName(),
+                                  buildTextTime(),
+                                  buildTextDate(),
+                                  buildTextCounty(),
+                                  buildTextDistrict(),
+                                  buildTextProvince(),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      buildTextLat(constraints),
+                                      buildTextLng(constraints),
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                          buildFooter(size),
-                        ],
+                            buildFooter(size),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -309,7 +314,7 @@ class _EditInsectLiteState extends State<EditInsectLite> {
       title: Text(
         'แก้ไขแมลงที่พบ',
         style: GoogleFonts.prompt(
-          fontSize: 16,
+          fontSize: 14,
           //fontWeight: FontWeight.w400,
         ),
       ),

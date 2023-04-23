@@ -74,28 +74,30 @@ class _EditUserState extends State<EditUser> {
           onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
           behavior: HitTestBehavior.opaque,
           child: Center(
-            child: SingleChildScrollView(
-              child: Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    Container(
-                      width: size * 0.7,
-                      child: Column(
-                        children: [
-                          buidHeader(),
-                          buildAvatar(constraints),
-                          buildTextName(),
-                          buildTextEmail(),
-                          buildTextPhone(),
-                          buildTextCounty(),
-                          buildTextDistrict(),
-                          buildTextProvince(),
-                        ],
+            child: Center(
+              child: SingleChildScrollView(
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      Container(
+                        width: size * 0.7,
+                        child: Column(
+                          children: [
+                            buidHeader(),
+                            buildAvatar(constraints),
+                            buildTextName(),
+                            buildTextEmail(),
+                            buildTextPhone(),
+                            buildTextCounty(),
+                            buildTextDistrict(),
+                            buildTextProvince(),
+                          ],
+                        ),
                       ),
-                    ),
-                    buildFooter(size)
-                  ],
+                      buildFooter(size)
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -22,6 +22,7 @@ class ShowButtonMap2 extends StatelessWidget {
         "แผนที่",
         style: GoogleFonts.prompt(
           color: MyConstant.dark,
+          fontSize: 12,
         ),
       ),
     );

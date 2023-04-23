@@ -152,7 +152,7 @@ class _HomeState extends State<Home> {
         Text(
           '${insectAllModels[index].inName}',
           style: GoogleFonts.prompt(
-            fontSize: 16,
+            fontSize: 14,
             color: MyConstant.dark,
             fontWeight: FontWeight.bold,
           ),
@@ -160,7 +160,7 @@ class _HomeState extends State<Home> {
         Text(
           '${insectAllModels[index].inDetails}',
           style: GoogleFonts.prompt(
-            fontSize: 14,
+            fontSize: 12,
             color: MyConstant.dark2,
           ),
           maxLines: 3,
@@ -225,7 +225,7 @@ class _HomeState extends State<Home> {
                   Text(
                     "${insectAllModels[index].usName}",
                     style: GoogleFonts.prompt(
-                      fontSize: 14,
+                      fontSize: 12,
                       color: MyConstant.dark2,
                       fontWeight: FontWeight.bold,
                     ),

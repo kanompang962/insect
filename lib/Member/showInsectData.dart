@@ -35,7 +35,6 @@ class _ShowInsectDataState extends State<ShowInsectData> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     loadValueFromAPI();
     checkTypeUser();
@@ -68,10 +67,23 @@ class _ShowInsectDataState extends State<ShowInsectData> {
           insectModelAPI = InsectModel.fromMap(item);
           print(
               '### From API ==>> ${insectModelAPI!.id} ${insectModelAPI!.name}');
-          subImageX(insectModelAPI!.img);
+          _subImageX(insectModelAPI!.img);
         }
       }
     });
+  }
+
+  void _subImageX(String string) {
+    String result = string.substring(1, string.length - 1);
+    List<String> strings = result.split(',');
+    String url;
+    for (var item in strings) {
+      item = item.replaceAll(' ', '');
+      url = '${MyConstant.domain}/insectFile$item';
+      setState(() {
+        images.add(url);
+      });
+    }
   }
 
   @override
@@ -84,58 +96,62 @@ class _ShowInsectDataState extends State<ShowInsectData> {
       body: load
           ? ShowProgress()
           : haveData!
-              ? Stack(
-                  children: [
-                    SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 280,
-                            width: double.infinity,
-                            child: PageView.builder(
-                              controller: controller,
-                              onPageChanged: (index) {
-                                setState(() {
-                                  currentIndex = index % images.length;
-                                });
-                              },
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 0),
-                                  child: SizedBox(
-                                    height: 300,
-                                    width: double.infinity,
-                                    child: CachedNetworkImage(
-                                      fit: BoxFit.cover,
-                                      imageUrl: images[index % images.length],
-                                      placeholder: (context, url) =>
-                                          ShowProgress(),
-                                      errorWidget: (context, url, error) =>
-                                          ShowImage(path: MyConstant.image),
+              ? LayoutBuilder(
+                  builder: (context, constraints) => SingleChildScrollView(
+                    child: Center(
+                      child: Container(
+                        width: (constraints.maxWidth > 412)
+                            ? (constraints.maxWidth * 0.8)
+                            : constraints.maxWidth,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 280,
+                              width: double.infinity,
+                              child: PageView.builder(
+                                controller: controller,
+                                onPageChanged: (index) {
+                                  setState(() {
+                                    currentIndex = index % images.length;
+                                  });
+                                },
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 0),
+                                    child: SizedBox(
+                                      height: 300,
+                                      width: double.infinity,
+                                      child: CachedNetworkImage(
+                                        fit: BoxFit.cover,
+                                        imageUrl: images[index % images.length],
+                                        placeholder: (context, url) =>
+                                            ShowProgress(),
+                                        errorWidget: (context, url, error) =>
+                                            ShowImage(path: MyConstant.image),
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
+                                  );
+                                },
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              for (var i = 0; i < images.length; i++)
-                                buildIndicator(currentIndex == i)
-                            ],
-                          ),
-                          buildDetails(size),
-                        ],
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                for (var i = 0; i < images.length; i++)
+                                  buildIndicator(currentIndex == i)
+                              ],
+                            ),
+                            buildDetails(size),
+                          ],
+                        ),
                       ),
                     ),
-                    //buildShowMap(size),
-                  ],
+                  ),
                 )
               : showNoData(),
     );
@@ -195,7 +211,7 @@ class _ShowInsectDataState extends State<ShowInsectData> {
               Text(
                 '${insectModelAPI!.name}',
                 style: GoogleFonts.prompt(
-                  fontSize: 20,
+                  fontSize: 16,
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -204,7 +220,7 @@ class _ShowInsectDataState extends State<ShowInsectData> {
           Text(
             'รายละเอียด:',
             style: GoogleFonts.prompt(
-              fontSize: 16,
+              fontSize: 12,
               fontWeight: FontWeight.w400,
               fontStyle: FontStyle.italic,
               color: MyConstant.primary,
@@ -221,7 +237,7 @@ class _ShowInsectDataState extends State<ShowInsectData> {
             child: Text(
               '${insectModelAPI!.details}',
               style: GoogleFonts.prompt(
-                fontSize: 16,
+                fontSize: 12,
               ),
               //maxLines: 10,
               //overflow: TextOverflow.ellipsis,
@@ -231,7 +247,7 @@ class _ShowInsectDataState extends State<ShowInsectData> {
           Text(
             'วิธีการป้องกันและกำจัด:',
             style: GoogleFonts.prompt(
-              fontSize: 16,
+              fontSize: 12,
               fontStyle: FontStyle.italic,
               color: Colors.red,
             ),
@@ -246,7 +262,7 @@ class _ShowInsectDataState extends State<ShowInsectData> {
             child: Text(
               '${insectModelAPI!.protect}',
               style: GoogleFonts.prompt(
-                fontSize: 16,
+                fontSize: 12,
               ),
             ),
           ),
@@ -270,25 +286,12 @@ class _ShowInsectDataState extends State<ShowInsectData> {
     );
   }
 
-  subImageX(String string) {
-    String result = string.substring(1, string.length - 1);
-    List<String> strings = result.split(',');
-    String url;
-    for (var item in strings) {
-      item = item.replaceAll(' ', '');
-      url = '${MyConstant.domain}/insectFile$item';
-      setState(() {
-        images.add(url);
-      });
-    }
-  }
-
   AppBar buildAppbar(double size) {
     return AppBar(
       title: Text(
         'ข้อมูลแมลง',
         style: GoogleFonts.prompt(
-          fontSize: 16,
+          fontSize: 14,
         ),
       ),
       backgroundColor: Colors.white,
@@ -306,7 +309,7 @@ class _ShowInsectDataState extends State<ShowInsectData> {
   }
 
 // function
-  Future<void> _functionDel(BuildContext context) async {
+  Future<Null> _functionDel(BuildContext context) async {
     String apiDeleteProductWhereId =
         '${MyConstant.domain}/insectFile/deleteInsectDataWhereID.php?isAdd=true&id=${insectModel!.id}';
     await Dio().get(apiDeleteProductWhereId).then(
@@ -375,8 +378,8 @@ class _ShowInsectDataState extends State<ShowInsectData> {
   }
 
 // Show Bottom Sheet
-  Future<void> showBottomSheet(double size) {
-    return showModalBottomSheet<void>(
+  Future<Null> showBottomSheet(double size) {
+    return showModalBottomSheet<Null>(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(10),

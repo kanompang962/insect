@@ -88,95 +88,107 @@ class _ApproveState extends State<Approve> {
                     onTap: () =>
                         FocusScope.of(context).requestFocus(FocusNode()),
                     behavior: HitTestBehavior.opaque,
-                    child: SingleChildScrollView(
-                      child: Form(
-                        key: formKey,
-                        child: Column(
-                          // crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 280,
-                              width: double.infinity,
-                              child: PageView.builder(
-                                controller: controller,
-                                onPageChanged: (index) {
-                                  setState(() {
-                                    currentIndex = index % images.length;
-                                  });
-                                },
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 0),
-                                    child: SizedBox(
-                                      height: 300,
-                                      width: double.infinity,
-                                      child: CachedNetworkImage(
-                                        fit: BoxFit.cover,
-                                        imageUrl: images[index % images.length],
-                                        placeholder: (context, url) =>
-                                            ShowProgress(),
-                                        errorWidget: (context, url, error) =>
-                                            ShowImage(path: MyConstant.image),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                    child: Center(
+                      child: SingleChildScrollView(
+                        child: Form(
+                          key: formKey,
+                          child: Container(
+                            width: (constraints.maxWidth > 412)
+                                ? (constraints.maxWidth * 0.8)
+                                : constraints.maxWidth,
+                            child: Column(
                               children: [
-                                for (var i = 0; i < images.length; i++)
-                                  buildIndicator(currentIndex == i)
-                              ],
-                            ),
-                            Container(
-                              width: size * 0.8,
-                              padding: EdgeInsets.symmetric(vertical: 24),
-                              child: Container(
-                                width: (constraints.maxWidth > 412)
-                                    ? (constraints.maxWidth * 0.6)
-                                    : constraints.maxWidth,
-                                padding: EdgeInsets.only(
-                                  bottom: 16,
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    buildTextName(),
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 8),
-                                      child: Text(
-                                        'รายละเอียด: ',
-                                        style: GoogleFonts.prompt(
-                                            color: MyConstant.primary),
-                                      ),
-                                    ),
-                                    buildTextDetails(),
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 8),
-                                      child: Text(
-                                        'วิธีป้องกันและกำจัด: ',
-                                        style: GoogleFonts.prompt(
-                                          color: Colors.red[700],
+                                SizedBox(
+                                  height: 280,
+                                  width: double.infinity,
+                                  child: PageView.builder(
+                                    controller: controller,
+                                    onPageChanged: (index) {
+                                      setState(() {
+                                        currentIndex = index % images.length;
+                                      });
+                                    },
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 0),
+                                        child: SizedBox(
+                                          height: 300,
+                                          width: double.infinity,
+                                          child: CachedNetworkImage(
+                                            fit: BoxFit.cover,
+                                            imageUrl:
+                                                images[index % images.length],
+                                            placeholder: (context, url) =>
+                                                ShowProgress(),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    ShowImage(
+                                                        path: MyConstant.image),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                    buildTextProtect(),
-                                    buildRadioJuiceSucker(size),
-                                    buildRadioStemBorer(size),
-                                    buildRadioRootFeeder(size),
-                                    buildRadioLeafFeeder(size),
-                                    buildFooter(size),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    for (var i = 0; i < images.length; i++)
+                                      buildIndicator(currentIndex == i)
                                   ],
                                 ),
-                              ),
+                                Container(
+                                  width: size * 0.8,
+                                  padding: EdgeInsets.symmetric(vertical: 24),
+                                  child: Container(
+                                    width: (constraints.maxWidth > 412)
+                                        ? (constraints.maxWidth * 0.6)
+                                        : constraints.maxWidth,
+                                    padding: EdgeInsets.only(
+                                      bottom: 16,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        buildTextName(),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 8),
+                                          child: Text(
+                                            'รายละเอียด: ',
+                                            style: GoogleFonts.prompt(
+                                                color: MyConstant.primary),
+                                          ),
+                                        ),
+                                        buildTextDetails(),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 8),
+                                          child: Text(
+                                            'วิธีป้องกันและกำจัด: ',
+                                            style: GoogleFonts.prompt(
+                                              color: Colors.red[700],
+                                            ),
+                                          ),
+                                        ),
+                                        buildTextProtect(),
+                                        buildRadioJuiceSucker(size),
+                                        buildRadioStemBorer(size),
+                                        buildRadioRootFeeder(size),
+                                        buildRadioLeafFeeder(size),
+                                        buildFooter(size),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
@@ -712,7 +724,7 @@ class _ApproveState extends State<Approve> {
       title: Text(
         'เพิ่มข้อมูลและยืนยัน',
         style: GoogleFonts.prompt(
-          fontSize: 20,
+          fontSize: 14,
         ),
       ),
     );

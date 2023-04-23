@@ -120,6 +120,7 @@ class _AccountState extends State<Account> {
       await Dio().get(apiGetUserWhereId).then((value) {
         if (value.toString() == 'null') {
           print('value ==> null');
+          _functionSignOut();
         } else {
           for (var item in json.decode(value.data)) {
             setState(() {
@@ -190,6 +191,15 @@ class _AccountState extends State<Account> {
               ),
             ),
     );
+  }
+
+// function
+  Future<Null> _functionSignOut() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.clear().then(
+          (value) => Navigator.pushNamedAndRemoveUntil(
+              context, MyConstant.routeUser, (route) => false),
+        );
   }
 
 // Widget
@@ -503,11 +513,7 @@ class _AccountState extends State<Account> {
   Widget buildButtonSingOut(double size) {
     return RaisedButton(
       onPressed: () async {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        preferences.clear().then(
-              (value) => Navigator.pushNamedAndRemoveUntil(
-                  context, MyConstant.routeUser, (route) => false),
-            );
+        _functionSignOut();
       },
       color: Color(0xFF800000),
       elevation: 2,

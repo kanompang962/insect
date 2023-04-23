@@ -112,36 +112,43 @@ class _MenuState extends State<Menu> {
           ? ShowProgress()
           : LayoutBuilder(
               builder: (context, constraints) => SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildHeadInsectLite(),
-                    buildMenuMain(size, context),
-                    Container(
-                      padding: EdgeInsets.only(left: 8, right: 12, top: 12),
-                      child: InkWell(
-                        onTap: () => print('#'),
-                        child: Text(
-                          'ประเภทความเสียหายที่เกิดจากแมลง',
-                          style: GoogleFonts.prompt(
-                            fontSize: 14,
-                            color: MyConstant.dark2,
+                child: Center(
+                  child: Container(
+                    width: (constraints.maxWidth > 412)
+                        ? (constraints.maxWidth * 0.8)
+                        : constraints.maxWidth,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        buildHeadInsectLite(),
+                        buildMenuMain(size, context),
+                        Container(
+                          padding: EdgeInsets.only(left: 8, right: 12, top: 12),
+                          child: InkWell(
+                            onTap: () => print('#'),
+                            child: Text(
+                              'ประเภทความเสียหายที่เกิดจากแมลง',
+                              style: GoogleFonts.prompt(
+                                fontSize: 14,
+                                color: MyConstant.dark2,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        buildHeadJuiceSucker(),
+                        buildJuiceSucker(size, context),
+                        buildHeadLeafFeeder(),
+                        buildLeafFeeder(size, context),
+                        buildHeadStemBorer(),
+                        buildStemBorer(size, context),
+                        buildHeadRootFeeder(),
+                        buildRootFeeder(size, context),
+                        SizedBox(
+                          height: 10,
+                        )
+                      ],
                     ),
-                    buildHeadJuiceSucker(),
-                    buildJuiceSucker(size, context),
-                    buildHeadLeafFeeder(),
-                    buildLeafFeeder(size, context),
-                    buildHeadStemBorer(),
-                    buildStemBorer(size, context),
-                    buildHeadRootFeeder(),
-                    buildRootFeeder(size, context),
-                    SizedBox(
-                      height: 10,
-                    )
-                  ],
+                  ),
                 ),
               ),
             ),

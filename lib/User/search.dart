@@ -159,45 +159,52 @@ class _SearchState extends State<Search> {
       },
       behavior: HitTestBehavior.opaque,
       child: Scaffold(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.white,
         body: load1
             ? ShowProgress()
             : haveData1
                 ? SafeArea(
                     child: LayoutBuilder(
-                      builder: (context, constraints) => Column(
-                        children: [
-                          buildSearchTextField(size),
-                          Container(
-                            color: Colors.white,
-                            padding: EdgeInsets.only(left: 5, right: 5),
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    buildMenu1(),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    buildMenu2(),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    buildMenu3(),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    buildMenu4(),
-                                  ]),
-                            ),
+                      builder: (context, constraints) => Center(
+                        child: Container(
+                          width: (constraints.maxWidth > 412)
+                              ? (constraints.maxWidth * 0.8)
+                              : constraints.maxWidth,
+                          child: Column(
+                            children: [
+                              buildSearchTextField(size),
+                              Container(
+                                color: Colors.white,
+                                padding: EdgeInsets.only(left: 5, right: 5),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        buildMenu1(),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        buildMenu2(),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        buildMenu3(),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        buildMenu4(),
+                                      ]),
+                                ),
+                              ),
+                              buildMenu(constraints),
+                              flagColor
+                                  ? buildInsectData(context, constraints)
+                                  : buildInsectLite(context, constraints),
+                            ],
                           ),
-                          buildMenu(constraints),
-                          flagColor
-                              ? buildInsectData(context, constraints)
-                              : buildInsectLite(context, constraints),
-                        ],
+                        ),
                       ),
                     ),
                   )
