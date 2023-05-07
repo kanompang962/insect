@@ -41,7 +41,7 @@ class _ListInsectDataState extends State<ListInsectData> {
   Future<Null> loadInsectDataFromAPI() async {
     if (insectAllModels.length != 0) {
       insectAllModels.clear();
-    } else {}
+    }
     String apiGet =
         '${MyConstant.domain}/insectFile/getAllInsectData.php?isAdd=true';
     try {

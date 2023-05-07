@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project001/model/insect_model.dart';
@@ -329,6 +330,7 @@ class _EditInsectDataState extends State<EditInsectData> {
         await Dio().get(path).then((value) => Navigator.pop(context));
         MyDialog().successDialog(context, 'เรียบร้อย', 'Data has been edited.');
       } catch (e) {
+        Navigator.pop(context);
         return MyDialog().warningDialog(
             context,
             'เกิดข้อผิดพลาด แก้ไขไม่สำเร็จ',

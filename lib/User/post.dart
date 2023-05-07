@@ -141,63 +141,60 @@ class _PostState extends State<Post> {
                 builder: (context, constraints) => GestureDetector(
                   onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
                   behavior: HitTestBehavior.opaque,
-                  child: Center(
-                    child: SingleChildScrollView(
-                      child: Container(
-                        width: (constraints.maxWidth > 412)
-                            ? (constraints.maxWidth * 0.8)
-                            : constraints.maxWidth,
-                        child: Column(
-                          children: [
-                            buildMenu(constraints),
-                            flagColor
-                                ? Form(
-                                    key: formKey,
-                                    child: Column(
-                                      children: [
-                                        buildImage(constraints),
-                                        Container(
-                                          width: size * 0.8,
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 24),
-                                          child:
-                                              uiTypeMember(constraints, size),
-                                        ),
-                                        buildFooter(size),
-                                      ],
-                                    ),
-                                  )
-                                : typeUser != 'Member'
-                                    ? Form(
-                                        key: formKey,
-                                        child: Column(
-                                          children: [
-                                            buildImage(constraints),
-                                            Container(
-                                              width: size * 0.8,
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: 24),
-                                              child: uiTypeExpert(
-                                                  constraints, size),
-                                            ),
-                                            buildFooter(size),
-                                          ],
-                                        ),
-                                      )
-                                    : Center(
-                                        child: Container(
-                                          padding: EdgeInsets.only(
-                                              top: constraints.maxHeight / 2.5),
-                                          child: Text(
-                                            'สำหรับผู้เชียวชาญและแอดมิน',
-                                            style: GoogleFonts.prompt(
-                                              color: MyConstant.dark2,
-                                            ),
+                  child: SingleChildScrollView(
+                    child: Container(
+                      width: (constraints.maxWidth > 412)
+                          ? (constraints.maxWidth * 0.8)
+                          : constraints.maxWidth,
+                      child: Column(
+                        children: [
+                          buildMenu(constraints),
+                          flagColor
+                              ? Form(
+                                  key: formKey,
+                                  child: Column(
+                                    children: [
+                                      buildImage(constraints),
+                                      Container(
+                                        width: size * 0.8,
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 24),
+                                        child: uiTypeMember(constraints, size),
+                                      ),
+                                      buildFooter(size),
+                                    ],
+                                  ),
+                                )
+                              : typeUser != 'Member'
+                                  ? Form(
+                                      key: formKey,
+                                      child: Column(
+                                        children: [
+                                          buildImage(constraints),
+                                          Container(
+                                            width: size * 0.8,
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 24),
+                                            child:
+                                                uiTypeExpert(constraints, size),
+                                          ),
+                                          buildFooter(size),
+                                        ],
+                                      ),
+                                    )
+                                  : Center(
+                                      child: Container(
+                                        padding: EdgeInsets.only(
+                                            top: constraints.maxHeight / 2.5),
+                                        child: Text(
+                                          'สำหรับผู้เชียวชาญและแอดมิน',
+                                          style: GoogleFonts.prompt(
+                                            color: MyConstant.dark2,
                                           ),
                                         ),
                                       ),
-                          ],
-                        ),
+                                    ),
+                        ],
                       ),
                     ),
                   ),
@@ -208,94 +205,70 @@ class _PostState extends State<Post> {
   }
 
 // ข้อมูลแมลง
-  Container uiTypeExpert(BoxConstraints constraints, double size) {
-    return Container(
-      width: (constraints.maxWidth > 412)
-          ? (constraints.maxWidth * 0.6)
-          : constraints.maxWidth,
-      padding: EdgeInsets.only(
-        bottom: 16,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildTextName(),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Text(
-              'รายละเอียด: ',
-              style: GoogleFonts.prompt(color: MyConstant.primary),
+  Widget uiTypeExpert(BoxConstraints constraints, double size) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        buildTextName(),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: Text(
+            'รายละเอียด: ',
+            style: GoogleFonts.prompt(color: MyConstant.primary),
+          ),
+        ),
+        buildTextDetails(),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: Text(
+            'วิธีป้องกันและกำจัด: ',
+            style: GoogleFonts.prompt(
+              color: Colors.red[700],
             ),
           ),
-          buildTextDetails(),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Text(
-              'วิธีป้องกันและกำจัด: ',
-              style: GoogleFonts.prompt(
-                color: Colors.red[700],
-              ),
-            ),
-          ),
-          buildTextProtect(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              buildButtonDate(),
-              buildButtonTime(),
-            ],
-          ),
-          buildRadioJuiceSucker(size),
-          buildRadioStemBorer(size),
-          buildRadioRootFeeder(size),
-          buildRadioLeafFeeder(size),
-        ],
-      ),
+        ),
+        buildTextProtect(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            buildButtonDate(),
+            buildButtonTime(),
+          ],
+        ),
+        buildRadioJuiceSucker(size),
+        buildRadioStemBorer(size),
+        buildRadioRootFeeder(size),
+        buildRadioLeafFeeder(size),
+      ],
     );
   }
 
 // ข้อมูลพบการแพร่ระบาด
-  Container uiTypeMember(BoxConstraints constraints, double size) {
-    return Container(
-      width: (constraints.maxWidth > 412)
-          ? (constraints.maxWidth * 0.6)
-          : constraints.maxWidth,
-      padding: EdgeInsets.only(
-        bottom: 16,
-      ),
-      child: Column(
-        children: [
-          Container(
-            width: size * 0.7,
-            padding: EdgeInsets.only(bottom: 10),
-            child: Column(
-              children: [
-                buildTextName(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    buildTextCounty(size),
-                    buildButtonDate(),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    buildTextDistrict(size),
-                    buildButtonTime(),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    buildTextProvince(size),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+  Widget uiTypeMember(BoxConstraints constraints, double size) {
+    return Column(
+      children: [
+        buildTextName(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            buildTextCounty(size),
+            buildButtonDate(),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            buildTextDistrict(size),
+            buildButtonTime(),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            buildTextProvince(size),
+          ],
+        ),
+      ],
     );
   }
 

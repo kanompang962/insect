@@ -7,6 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project001/Components/insectLite.dart';
+import 'package:project001/Components/insectType.dart';
 import 'package:project001/Components/showDetails1.dart';
 import 'package:project001/model/insectLiteAll_model.dart';
 import 'package:project001/model/insect_model.dart';
@@ -190,7 +191,14 @@ class _MenuState extends State<Menu> {
     return Container(
       padding: EdgeInsets.only(left: 8, right: 12, bottom: 4),
       child: InkWell(
-        onTap: () => print('#'),
+        // onTap: () => Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => InsectType(
+        //       type: juice_Sucker[0].type,
+        //     ),
+        //   ),
+        // ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -216,7 +224,14 @@ class _MenuState extends State<Menu> {
     return Container(
       padding: EdgeInsets.only(left: 8, right: 12, top: 12, bottom: 4),
       child: InkWell(
-        onTap: () => print('##'),
+        // onTap: () => Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => InsectType(
+        //       type: leaf_Feeder[0].type,
+        //     ),
+        //   ),
+        // ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -242,7 +257,14 @@ class _MenuState extends State<Menu> {
     return Container(
       padding: EdgeInsets.only(left: 8, right: 12, top: 12, bottom: 4),
       child: InkWell(
-        onTap: () => print('###'),
+        // onTap: () => Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => InsectType(
+        //       type: stem_Borer[0].type,
+        //     ),
+        //   ),
+        // ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -268,7 +290,14 @@ class _MenuState extends State<Menu> {
     return Container(
       padding: EdgeInsets.only(left: 8, right: 12, top: 12, bottom: 4),
       child: InkWell(
-        onTap: () => print('####'),
+        // onTap: () => Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => InsectType(
+        //       type: root_feeder[0].type,
+        //     ),
+        //   ),
+        // ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

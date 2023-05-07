@@ -474,7 +474,7 @@ class _ListInsectLiteState extends State<ListInsectLite> {
                 ),
               ),
               Text(
-                ' | จัดการข้อมูลแมลง',
+                ' | จัดการข้อมูลแมลงที่พบแพร่ระบาด',
                 style: GoogleFonts.prompt(
                   fontSize: 14,
                 ),
