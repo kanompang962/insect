@@ -62,6 +62,18 @@ class _ShowDetails1State extends State<ShowDetails1> {
     }
   }
 
+  String checkType(String type) {
+    if (type == '1') {
+      return 'ดูดกินน้ำเลี้ยงดอก';
+    } else if (type == '2') {
+      return 'กัดกินลำต้น';
+    } else if (type == '3') {
+      return 'กัดกินราก';
+    } else {
+      return 'กัดกินใบ';
+    }
+  }
+
   void subImageX(String string) {
     String result = string.substring(1, string.length - 1);
     List<String> strings = result.split(',');
@@ -199,16 +211,20 @@ class _ShowDetails1State extends State<ShowDetails1> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '${insectAllModelAPI!.inName}',
-                style: GoogleFonts.prompt(
-                  fontSize: 16,
-                ),
-              ),
-            ],
+          Text(
+            '${insectAllModelAPI!.inName}',
+            style: GoogleFonts.prompt(
+              fontSize: 16,
+            ),
+          ),
+          Text(
+            'ประเภท: ${checkType(insectAllModelAPI!.inType)}',
+            style: GoogleFonts.prompt(
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+              fontStyle: FontStyle.italic,
+            ),
+            overflow: TextOverflow.ellipsis,
           ),
           Text(
             'รายละเอียด:',

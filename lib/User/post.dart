@@ -393,6 +393,7 @@ class _PostState extends State<Post> {
             if (loop >= files.length) {
               SharedPreferences preference =
                   await SharedPreferences.getInstance();
+              String id = preference.getString('id')!;
               String img = paths.toString();
               String name = nameController.text;
               String county = countyController.text;
@@ -400,16 +401,6 @@ class _PostState extends State<Post> {
               String province = provinceController.text;
               String details = detailsController.text;
               String protect = protectController.text;
-              //String lat = latController.text;
-              //String long = longController.text;
-              String user = preference.getString('username')!;
-              String id = preference.getString('id')!;
-              print('###  idUser = $id');
-              print('###  nameUser = $user');
-              print('### images ==> $img');
-              print('### flagColor ==> $flagColor');
-              print(
-                  '### data ==> $name $county $district $province $date $time $lat:$lng');
               String path;
               if (flagColor) {
                 path =

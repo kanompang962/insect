@@ -46,6 +46,7 @@ class _LoginState extends State<Login> {
                       buildUser(size),
                       buildPassword(size),
                       buildButtonLogin(size), //buidLogin(size),
+                      // buildButtonFb(size), //buidLogin(size),
                       buildRegister(context),
                     ],
                   ),
@@ -176,6 +177,28 @@ class _LoginState extends State<Login> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Text(
           "เข้าสู่ระบบ",
+          style: GoogleFonts.prompt(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildButtonFb(double size) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 80),
+      padding: EdgeInsets.symmetric(vertical: 16),
+      child: RaisedButton(
+        onPressed: () {},
+        color: Colors.blue[900],
+        padding: EdgeInsets.symmetric(horizontal: 0),
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        child: Text(
+          "FACEBOOK",
           style: GoogleFonts.prompt(
             fontWeight: FontWeight.bold,
             fontSize: 16,

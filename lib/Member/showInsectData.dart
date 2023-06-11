@@ -73,6 +73,18 @@ class _ShowInsectDataState extends State<ShowInsectData> {
     });
   }
 
+  String checkType(String type) {
+    if (type == '1') {
+      return 'ดูดกินน้ำเลี้ยงดอก';
+    } else if (type == '2') {
+      return 'กัดกินลำต้น';
+    } else if (type == '3') {
+      return 'กัดกินราก';
+    } else {
+      return 'กัดกินใบ';
+    }
+  }
+
   void _subImageX(String string) {
     String result = string.substring(1, string.length - 1);
     List<String> strings = result.split(',');
@@ -205,17 +217,21 @@ class _ShowInsectDataState extends State<ShowInsectData> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '${insectModelAPI!.name}',
-                style: GoogleFonts.prompt(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ],
+          Text(
+            '${insectModelAPI!.name}',
+            style: GoogleFonts.prompt(
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          Text(
+            'ประเภท: ${checkType(insectModelAPI!.type)}',
+            style: GoogleFonts.prompt(
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+              fontStyle: FontStyle.italic,
+            ),
+            overflow: TextOverflow.ellipsis,
           ),
           Text(
             'รายละเอียด:',

@@ -150,6 +150,16 @@ class _EditProfileState extends State<EditProfile> {
     });
   }
 
+  bool isEmailValid() {
+    RegExp regex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
+    return regex.hasMatch(emailController.text);
+  }
+
+  bool isPhoneNumberValid() {
+    RegExp regex = RegExp(r'^(08|02|09|06)\d{8}$');
+    return regex.hasMatch(phoneController.text);
+  }
+
   // Select Images
   Future<Null> chooseSourceImageDialog() async {
     showDialog(
@@ -349,6 +359,9 @@ class _EditProfileState extends State<EditProfile> {
           if (value!.isEmpty) {
             return 'กรุณากรอกข้อมูลให้ครบ';
           } else {
+            if (!isPhoneNumberValid()) {
+              return 'กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง';
+            }
             return null;
           }
         },
@@ -371,6 +384,9 @@ class _EditProfileState extends State<EditProfile> {
           if (value!.isEmpty) {
             return 'กรุณากรอกข้อมูลให้ครบ';
           } else {
+            if (!isEmailValid()) {
+              return 'กรุณากรอกอีเมลให้ถูกต้อง';
+            }
             return null;
           }
         },

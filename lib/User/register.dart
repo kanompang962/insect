@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:math';
-import 'dart:ui';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -231,6 +230,16 @@ class _RegisterState extends State<Register> {
     }
   }
 
+  bool isEmailValid() {
+    RegExp regex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
+    return regex.hasMatch(emailController.text);
+  }
+
+  bool isPhoneNumberValid() {
+    RegExp regex = RegExp(r'^(08|02|09|06)\d{8}$');
+    return regex.hasMatch(phoneController.text);
+  }
+
 // Widget
   Widget buildFooter(double size) {
     return Container(
@@ -434,11 +443,15 @@ class _RegisterState extends State<Register> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 35.0),
       child: TextFormField(
+        keyboardType: TextInputType.phone,
         controller: phoneController,
         validator: (value) {
           if (value!.isEmpty) {
             return 'กรุณากรอกข้อมูลให้ครบ';
           } else {
+            if (!isPhoneNumberValid()) {
+              return 'กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง';
+            }
             return null;
           }
         },
@@ -461,6 +474,9 @@ class _RegisterState extends State<Register> {
           if (value!.isEmpty) {
             return 'กรุณากรอกข้อมูลให้ครบ';
           } else {
+            if (!isEmailValid()) {
+              return 'กรุณากรอกอีเมลให้ถูกต้อง';
+            }
             return null;
           }
         },

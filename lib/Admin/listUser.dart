@@ -26,11 +26,14 @@ class _ListUserState extends State<ListUser> {
   UserModel? userModel;
   bool haveData = false;
   bool load = true;
+  bool status = false;
+  List<UserModel> _foundUser = [];
 
   @override
   void initState() {
     super.initState();
     loadUserFromAPI();
+    _foundUser = userModels;
     print('----------Refresh----------');
   }
 
@@ -67,8 +70,29 @@ class _ListUserState extends State<ListUser> {
     }
   }
 
+  void _runFilter(String enteredKeyword) {
+    List<UserModel> results1 = [];
+    if (enteredKeyword.isEmpty) {
+      // ไม่มีการค้นหา
+      print('### ไม่มีการค้นหา');
+      results1 = userModels;
+    } else {
+      // ค้นหาชื่อ
+      print('### ค้นหาชื่อ');
+      results1 = userModels
+          .where((item) =>
+              item.name.toLowerCase().contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+
+    setState(() {
+      _foundUser = results1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    double size = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: buildAppbar(),
       backgroundColor: Colors.grey[200],
@@ -80,6 +104,7 @@ class _ListUserState extends State<ListUser> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    buildSearchTextField(size),
                     Expanded(
                       child: MediaQuery.removePadding(
                         context: context,
@@ -90,7 +115,7 @@ class _ListUserState extends State<ListUser> {
                               : constraints.maxWidth,
                           child: ListView.builder(
                             shrinkWrap: true,
-                            itemCount: userModels.length,
+                            itemCount: _foundUser.length,
                             itemBuilder: (context, index) {
                               return LayoutBuilder(
                                 builder: (context, constraints) => Padding(
@@ -101,7 +126,7 @@ class _ListUserState extends State<ListUser> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => UserDetail(
-                                            id: userModels[index].id),
+                                            id: _foundUser[index].id),
                                       ),
                                     ),
                                     child: Container(
@@ -120,7 +145,7 @@ class _ListUserState extends State<ListUser> {
                                                 CachedNetworkImage(
                                                   fit: BoxFit.cover,
                                                   imageUrl:
-                                                      '${MyConstant.domain}${userModels[index].img}',
+                                                      '${MyConstant.domain}${_foundUser[index].img}',
                                                   errorWidget:
                                                       (context, url, error) =>
                                                           ShowImage(
@@ -151,7 +176,7 @@ class _ListUserState extends State<ListUser> {
                                                             .start,
                                                     children: [
                                                       Text(
-                                                        "${userModels[index].name}",
+                                                        "${_foundUser[index].name}",
                                                         style:
                                                             GoogleFonts.prompt(
                                                           fontSize: 14,
@@ -162,7 +187,7 @@ class _ListUserState extends State<ListUser> {
                                                         ),
                                                       ),
                                                       Text(
-                                                        "${userModels[index].email}",
+                                                        "${_foundUser[index].email}",
                                                         style:
                                                             GoogleFonts.prompt(
                                                           fontSize: 12,
@@ -184,7 +209,7 @@ class _ListUserState extends State<ListUser> {
                                                       MaterialPageRoute(
                                                         builder: (context) =>
                                                             EditUser(
-                                                                id: userModels[
+                                                                id: _foundUser[
                                                                         index]
                                                                     .id),
                                                       ),
@@ -203,7 +228,7 @@ class _ListUserState extends State<ListUser> {
                                                 IconButton(
                                                   onPressed: () {
                                                     _showDelDialog(context,
-                                                        userModels[index].id);
+                                                        _foundUser[index].id);
                                                   },
                                                   icon: Icon(
                                                     FontAwesomeIcons.xmark,
@@ -314,6 +339,60 @@ class _ListUserState extends State<ListUser> {
   }
 
 // Widget
+  Widget buildSearchTextField(double size) {
+    return Container(
+      padding: EdgeInsets.only(right: 8, left: 8, top: 8, bottom: 8),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            Container(
+              width: status ? size * 0.8 : size * 0.96,
+              height: 45,
+              decoration: BoxDecoration(
+                color: Colors.white70,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: TextFormField(
+                onTap: () {
+                  status = true;
+                  print(status);
+                },
+                onChanged: (value) {
+                  //print(val);
+                  _runFilter(value);
+                  print('### _runFilter ==> $value');
+                },
+                decoration: InputDecoration(
+                  hintText: 'Search',
+                  prefixIcon: Icon(
+                    FontAwesomeIcons.search,
+                    size: 16,
+                  ),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+            TextButton(
+                onPressed: () {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                  status = false;
+                  print(status);
+                },
+                child: status
+                    ? Text(
+                        'ยกเลิก',
+                        style: GoogleFonts.prompt(
+                          color: Colors.black,
+                        ),
+                      )
+                    : Container())
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget buildButtonConfirm(String id) {
     return RaisedButton(
       onPressed: () async {
